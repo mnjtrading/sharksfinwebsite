@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Showcase Store</title>
+    <title>Sharksfin Store</title>
     <style>
         :root {
             --color-primary: #0d6b6b;
@@ -131,12 +131,16 @@
         .product-image {
             width: 100%;
             height: 250px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3em;
-            color: white;
+            background-color: #667eea;
+            display: block;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .product-info {
@@ -370,7 +374,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>🛍️ Product Showcase Store</h1>
+        <h1>🦈 Sharksfin Store</h1>
         <p>Discover our amazing products</p>
     </div>
 
@@ -485,7 +489,7 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2026 Product Showcase Store. All rights reserved.</p>
+        <p>&copy; 2026 Sharksfin Store. All rights reserved.</p>
     </div>
 
     <script>
@@ -548,7 +552,8 @@
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = products.map(product => `
                 <div class="product-card" onclick="selectProduct(${product.id})">
-                    <div class="product-image" style="background: url('${product.image}') center/cover no-repeat; background-color: #667eea;">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy" />
                     </div>
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
