@@ -344,8 +344,43 @@
             background-color: var(--color-primary);
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             margin-top: 40px;
+        }
+
+        .social-buttons {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-btn:hover {
+            background-color: #f5a623;
+            border-color: #f5a623;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #1877f2;
+            border-color: #1877f2;
         }
 
         @media (max-width: 600px) {
@@ -489,6 +524,11 @@
     </div>
 
     <div class="footer">
+        <div class="social-buttons">
+            <a href="https://www.facebook.com/mnjdistributionsinc" target="_blank" class="social-btn facebook" title="Follow us on Facebook">
+                <span>f</span>
+            </a>
+        </div>
         <p>&copy; 2026 Sharksfin Store. All rights reserved.</p>
     </div>
 
