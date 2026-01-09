@@ -421,12 +421,12 @@
                         </div>
                         <div class="summary-item">
                             <span>Price:</span>
-                            <strong id="summaryPrice">$0.00</strong>
+                            <strong id="summaryPrice">₱0.00</strong>
                         </div>
                         <div class="total">
                             <div class="summary-item">
                                 <span>Total:</span>
-                                <span id="summaryTotal">$0.00</span>
+                                <span id="summaryTotal">₱0.00</span>
                             </div>
                         </div>
                     </div>
@@ -494,30 +494,30 @@
             {
                 id: 1,
                 name: 'Premium Product 1',
-                emoji: '⭐',
-                price: 29.99,
-                description: 'High-quality product with excellent features'
+                price: 299.99,
+                description: 'High-quality product with excellent features',
+                image: 'https://raw.githubusercontent.com/sharksfinwebsite/sharksfinwebsite/main/images/image1.jpg'
             },
             {
                 id: 2,
                 name: 'Deluxe Product 2',
-                emoji: '✨',
-                price: 49.99,
-                description: 'Premium offering with premium features'
+                price: 499.99,
+                description: 'Premium offering with premium features',
+                image: 'https://raw.githubusercontent.com/sharksfinwebsite/sharksfinwebsite/main/images/image2.jpg'
             },
             {
                 id: 3,
                 name: 'Essential Product 3',
-                emoji: '🎁',
-                price: 19.99,
-                description: 'Great value for everyday needs'
+                price: 199.99,
+                description: 'Great value for everyday needs',
+                image: 'https://raw.githubusercontent.com/sharksfinwebsite/sharksfinwebsite/main/images/image3.jpg'
             },
             {
                 id: 4,
                 name: 'Expert Product 4',
-                emoji: '🏆',
-                price: 79.99,
-                description: 'Professional-grade quality and performance'
+                price: 799.99,
+                description: 'Professional-grade quality and performance',
+                image: 'https://raw.githubusercontent.com/sharksfinwebsite/sharksfinwebsite/main/images/image4.jpg'
             }
         ];
 
@@ -528,11 +528,12 @@
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = products.map(product => `
                 <div class="product-card" onclick="selectProduct(${product.id})">
-                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-image" style="background: url('${product.image}') center/cover no-repeat; background-color: #667eea;">
+                    </div>
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
                         <div class="product-description">${product.description}</div>
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="product-price">₱${product.price.toFixed(2)}</div>
                         <button class="btn-order" onclick="event.stopPropagation(); selectProduct(${product.id})">Order Now</button>
                     </div>
                 </div>
@@ -543,7 +544,7 @@
         function selectProduct(id) {
             selectedProduct = products.find(p => p.id === id);
             document.getElementById('summaryProduct').textContent = selectedProduct.name;
-            document.getElementById('summaryPrice').textContent = `$${selectedProduct.price.toFixed(2)}`;
+            document.getElementById('summaryPrice').textContent = `₱${selectedProduct.price.toFixed(2)}`;
             updateTotal();
             document.getElementById('orderForm').reset();
             document.getElementById('firstName').focus();
@@ -559,7 +560,7 @@
         function updateTotal() {
             const quantity = parseInt(document.getElementById('quantity').value) || 1;
             const total = selectedProduct ? selectedProduct.price * quantity : 0;
-            document.getElementById('summaryTotal').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('summaryTotal').textContent = `₱${total.toFixed(2)}`;
         }
 
         // Show/hide sections
@@ -594,11 +595,11 @@
                     city: document.getElementById('city').value,
                     zipcode: document.getElementById('zipcode').value,
                     notes: document.getElementById('notes').value,
-                    ownerEmail: 'greattimeatday@gmail.com' // Update this with your email address
+                    ownerEmail: 'YOUR_EMAIL@gmail.com' // Update this with your email address
                 };
 
                 // Google Apps Script web app URL - configured with your deployment
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbw66iLvsLqggSLIuipuTQniIroB-tA4u5EzGmvPUQEiP9tie0sUmKW5k7e9Ye6ZHPmbBQ/exec';
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbzHWG-HxgNKckOodFrKcrx1-rWW_AfEFVfKUNSgQMrEGoQ8Weg5YaP7zqJh8AeUsBgSGQ/exec';
                 
                 // Log for debugging
                 console.log('Sending order data:', formData);
