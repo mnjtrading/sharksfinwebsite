@@ -594,18 +594,14 @@
                     city: document.getElementById('city').value,
                     zipcode: document.getElementById('zipcode').value,
                     notes: document.getElementById('notes').value,
-                    ownerEmail: 'greattimeatday@gmail.com' // CHANGE THIS
+                    ownerEmail: 'YOUR_EMAIL@gmail.com' // Update this with your email address
                 };
 
-                // Replace with your Google Apps Script web app URL
+                // Google Apps Script web app URL - configured with your deployment
                 const scriptUrl = 'https://script.google.com/macros/s/AKfycbzHWG-HxgNKckOodFrKcrx1-rWW_AfEFVfKUNSgQMrEGoQ8Weg5YaP7zqJh8AeUsBgSGQ/exec';
                 
-                // Check if deployment ID has been updated
-                if (scriptUrl.includes('AKfycbzHWG-HxgNKckOodFrKcrx1-rWW_AfEFVfKUNSgQMrEGoQ8Weg5YaP7zqJh8AeUsBgSGQ')) {
-                    messageEl.className = 'message error';
-                    messageEl.textContent = '⚠️ Error: Update scriptUrl with your Google Apps Script deployment ID in the code.';
-                    throw new Error('Deployment ID not configured');
-                }
+                // Log for debugging
+                console.log('Sending order data:', formData);
                 
                 const response = await fetch(scriptUrl, {
                     method: 'POST',
