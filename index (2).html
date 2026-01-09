@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Showcase Store</title>
+    <style>
+        :root {
+            --color-primary: #0d6b6b;
+            --color-primary-hover: #085a5a;
+            --color-secondary: #f5a623;
+            --color-bg: #f9f9f9;
+            --color-text: #333;
+            --color-border: #ddd;
+            --color-error: #e74c3c;
+            --color-success: #27ae60;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e89510;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-primary);
+        }
+
+        .product-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.5em;
+            color: var(--color-secondary);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-order {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-order:hover {
+            background-color: var(--color-primary-hover);
+        }
+
+        .order-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 5px rgba(13, 107, 107, 0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        .order-summary {
+            background-color: #f0f8f8;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .summary-item strong {
+            color: var(--color-primary);
+        }
+
+        .total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--color-secondary);
+            border-top: 2px solid var(--color-border);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background-color: #e89510;
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .about-section {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin: 30px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .about-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .about-section p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .footer {
+            background-color: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛍️ Product Showcase Store</h1>
+        <p>Discover our amazing products</p>
+    </div>
+
+    <div class="container">
+        <div class="nav-buttons">
+            <button class="btn btn-primary" onclick="showSection('home')">🏠 Home</button>
+            <button class="btn btn-primary" onclick="showSection('products')">📦 Products</button>
+            <button class="btn btn-secondary" onclick="showSection('about')">ℹ️ About Us</button>
+        </div>
+
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <div class="about-section">
+                <h2>Welcome to Our Store!</h2>
+                <p>Browse our collection of premium products and place your order easily. Each purchase comes with a confirmation receipt sent directly to your email.</p>
+                <p>Our products are carefully curated to bring you the best quality and value. We ensure every customer receives excellent service and support.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-primary btn-large" onclick="showSection('products')" style="padding: 15px 40px; font-size: 1.1em;">Start Shopping Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products" class="section">
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about" class="section">
+            <div class="about-section">
+                <h2>About Our Store</h2>
+                <p>We are a dedicated team committed to providing high-quality products and exceptional customer service. Our mission is to deliver value and excellence in every transaction.</p>
+                <p>With years of experience in the industry, we've built a reputation for reliability, quality, and customer satisfaction. Each product is selected with care to ensure it meets our high standards.</p>
+                <p>Thank you for choosing us. We look forward to serving you!</p>
+            </div>
+        </div>
+
+        <!-- Order Form Section -->
+        <div id="order" class="section">
+            <div class="order-form">
+                <h2 style="color: var(--color-primary); margin-bottom: 25px;">Place Your Order</h2>
+                <div id="orderMessage" class="message"></div>
+                <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                    <div class="order-summary">
+                        <div class="summary-item">
+                            <span>Product:</span>
+                            <strong id="summaryProduct">-</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Price:</span>
+                            <strong id="summaryPrice">$0.00</strong>
+                        </div>
+                        <div class="total">
+                            <div class="summary-item">
+                                <span>Total:</span>
+                                <span id="summaryTotal">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipcode">Zip Code</label>
+                            <input type="text" id="zipcode" name="zipcode">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity *</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Special Notes / Instructions</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Any special requests?"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Product Showcase Store. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Sample products - CUSTOMIZE THIS WITH YOUR PRODUCTS
+        const products = [
+            {
+                id: 1,
+                name: 'Premium Product 1',
+                emoji: '⭐',
+                price: 29.99,
+                description: 'High-quality product with excellent features'
+            },
+            {
+                id: 2,
+                name: 'Deluxe Product 2',
+                emoji: '✨',
+                price: 49.99,
+                description: 'Premium offering with premium features'
+            },
+            {
+                id: 3,
+                name: 'Essential Product 3',
+                emoji: '🎁',
+                price: 19.99,
+                description: 'Great value for everyday needs'
+            },
+            {
+                id: 4,
+                name: 'Expert Product 4',
+                emoji: '🏆',
+                price: 79.99,
+                description: 'Professional-grade quality and performance'
+            }
+        ];
+
+        let selectedProduct = null;
+
+        // Initialize products grid
+        function initProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="selectProduct(${product.id})">
+                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <button class="btn-order" onclick="event.stopPropagation(); selectProduct(${product.id})">Order Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Select product and show order form
+        function selectProduct(id) {
+            selectedProduct = products.find(p => p.id === id);
+            document.getElementById('summaryProduct').textContent = selectedProduct.name;
+            document.getElementById('summaryPrice').textContent = `$${selectedProduct.price.toFixed(2)}`;
+            updateTotal();
+            document.getElementById('orderForm').reset();
+            document.getElementById('firstName').focus();
+            showSection('order');
+        }
+
+        // Update total price based on quantity
+        document.addEventListener('DOMContentLoaded', function() {
+            initProducts();
+            document.getElementById('quantity').addEventListener('change', updateTotal);
+        });
+
+        function updateTotal() {
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const total = selectedProduct ? selectedProduct.price * quantity : 0;
+            document.getElementById('summaryTotal').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Show/hide sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle form submission
+        async function handleOrderSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const messageEl = document.getElementById('orderMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span> Processing...';
+
+            try {
+                const formData = {
+                    timestamp: new Date().toLocaleString(),
+                    product: selectedProduct.name,
+                    price: selectedProduct.price,
+                    quantity: parseInt(document.getElementById('quantity').value),
+                    total: selectedProduct.price * parseInt(document.getElementById('quantity').value),
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    zipcode: document.getElementById('zipcode').value,
+                    notes: document.getElementById('notes').value,
+                    ownerEmail: 'YOUR_EMAIL@gmail.com' // CHANGE THIS
+                };
+
+                // Replace with your Google Apps Script web app URL
+                const scriptUrl = 'https://script.google.com/macros/d/YOUR_DEPLOYMENT_ID/userweb';
+                
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    messageEl.className = 'message success';
+                    messageEl.textContent = '✓ Order placed successfully! Check your email for receipts.';
+                    document.getElementById('orderForm').reset();
+                    setTimeout(() => showSection('home'), 3000);
+                } else {
+                    throw new Error(result.message || 'Order submission failed');
+                }
+            } catch (error) {
+                messageEl.className = 'message error';
+                messageEl.textContent = `✗ Error: ${error.message}. Make sure the Google Apps Script is deployed.`;
+                console.error('Order error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Place Order';
+            }
+        }
+    </script>
+</body>
+</html>
