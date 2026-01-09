@@ -594,11 +594,18 @@
                     city: document.getElementById('city').value,
                     zipcode: document.getElementById('zipcode').value,
                     notes: document.getElementById('notes').value,
-                    ownerEmail: 'mnjtradingshop@gmail.com' // CHANGE THIS
+                    ownerEmail: 'YOUR_EMAIL@gmail.com' // CHANGE THIS
                 };
 
                 // Replace with your Google Apps Script web app URL
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbyr65qhzOiAJ8oYG9UMvF19X6qLEzs01JP3lXxWRZMNaiYwuaPByoD4IaV2GeNwke3ivA/exec';
+                const scriptUrl = 'https://script.google.com/macros/d/YOUR_DEPLOYMENT_ID/userweb';
+                
+                // Check if deployment ID has been updated
+                if (scriptUrl.includes('YOUR_DEPLOYMENT_ID')) {
+                    messageEl.className = 'message error';
+                    messageEl.textContent = '⚠️ Error: Update scriptUrl with your Google Apps Script deployment ID in the code.';
+                    throw new Error('Deployment ID not configured');
+                }
                 
                 const response = await fetch(scriptUrl, {
                     method: 'POST',
