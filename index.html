@@ -489,8 +489,15 @@
     </div>
 
     <script>
-        // Sample products - CUSTOMIZE THIS WITH YOUR PRODUCTS
-        const products = [
+        // Product list: prefer images found in the `images/` folder; fall back to defaults
+        const imageFiles = [
+            'images/image1.jpg',
+            'images/image2.jpg',
+            'images/image3.jpg',
+            'images/image4.jpg'
+        ];
+
+        const defaultProducts = [
             {
                 id: 1,
                 name: 'Premium Product 1',
@@ -520,6 +527,19 @@
                 image: 'images/image4.jpg'
             }
         ];
+
+        const products = (imageFiles.length ? imageFiles.map((img, idx) => {
+            const base = img.split('/').pop().replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+            const name = base.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            const price = 199.99 + (idx * 100);
+            return {
+                id: idx + 1,
+                name: name || `Product ${idx + 1}`,
+                price: price,
+                description: 'Auto-generated product from image',
+                image: img
+            };
+        }) : defaultProducts);
 
         let selectedProduct = null;
 
